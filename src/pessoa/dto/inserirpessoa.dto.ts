@@ -6,5 +6,9 @@ export class CriarPessoaDTO{
     NOME: string;
 
     @IsString()
+    ENDERECO: string;
+
+    @IsString()
+    TELEFONE: string;
     
 }
