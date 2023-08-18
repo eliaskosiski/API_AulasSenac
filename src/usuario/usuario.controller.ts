@@ -1,64 +1,42 @@
-import { CriaUsuarioDTO } from "./dto/usuario.dto";
-import { UsuarioEntity } from "./usuario.entity";
-import { UsuariosArmazenados } from "./usuario.dm";
-import {v4 as uuid} from 'uuid';
-import { listaUsuarioDTO } from "./dto/listaUsuario.dto";
-import { AlteraUsuarioDTO } from "./dto/atualizaUsuario.dto";
-import {  Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { RetornoCadastroDTO, RetornoObjDTO } from "src/dto/retorno.dto";
+import { AlterarUsuarioDTO } from "./dto/atualizaUsuario.dto";
+import { CriaUsuarioDTO } from "./dto/insereUsuario.dto";
+import { USUARIO } from "./usuario.entity";
+import { UsuarioService } from "./usuario.service";
 
-@Controller('/usuarios')
+ 
+ @Controller('/pessoa')
 export class UsuarioController{
-    constructor(private clsUsuariosArmazenados: UsuariosArmazenados){
+    constructor(private readonly usuarioService: UsuarioService){
              
     }
 
-    @Get()
-    async RetornoUsuarios(){
-        const usuariosListados = await this.clsUsuariosArmazenados.Usuarios;
-        const listaRetorno = usuariosListados.map(
-            usuario => new listaUsuarioDTO(
-                usuario.id,
-                usuario.nome
-            )
-        );
-        
-        return listaRetorno;
+    @Get('listar')
+    async listar(): Promise<USUARIO[]>{
+        return this.usuarioService.listar();
     }
-     // fazer GET de filtro de usuário por nome ou email
 
-    @Post()    
-    async criaUsuario(@Body() dadosUsuario: CriaUsuarioDTO){
-       
-        var usuario = new UsuarioEntity(uuid(),dadosUsuario.nome,dadosUsuario.idade,dadosUsuario.cidade,dadosUsuario.email,dadosUsuario.telefone,dadosUsuario.senha);
-        
-        var retornoUsuario;
-            
-        this.clsUsuariosArmazenados.AdicionarUsuario(usuario);
-        retornoUsuario={
-            id: usuario.id,
-            message:'Usuário Criado'
-        }
+    @Post('')
+    async criaPessoa(@Body() dados: CriaUsuarioDTO): Promise<RetornoCadastroDTO>{        
+        return this.usuarioService.inserir(dados)        
+    }
+
+    @Put(':id')
+    async alterarPessoa(@Body() dados: AlterarUsuarioDTO,@Param('id') id: string): Promise<RetornoCadastroDTO>{        
+        return this.usuarioService.alterar(id,dados)        
+    }
     
-        
-        return retornoUsuario;
+    @Get('ID-:id')
+    async listarID(@Param('id') id: string): Promise<USUARIO>{
+        return this.usuarioService.localizarID(id);
     }
 
+
+    @Delete(':id')
+    async removePessoa(@Param('id') id: string): Promise<RetornoObjDTO>{
+        return this.usuarioService.remover(id);
+    }
     
-    @Put('/:id')
-    async atualizaUsuario(@Param('id') id: string, @Body() novosDados: AlteraUsuarioDTO){
-        const usuarioAtualizado = await this.clsUsuariosArmazenados.atualizaUsuario(id, novosDados);
-        return {
-            usuario: usuarioAtualizado,
-            message: 'Usuário atualizado'
-        }
-    }
-
-    @Delete('/:id')
-    async removeUsuario(@Param('id') id: string){
-        const usuarioRemovido = await this.clsUsuariosArmazenados.removeUsuario(id);
-        return {
-            usuario: usuarioRemovido,
-            message: 'Usuário removido'
-        }
-    }
+   
 }

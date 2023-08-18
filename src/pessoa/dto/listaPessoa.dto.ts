@@ -5,3 +5,4 @@ export class ListarPessoa{
         readonly TELEFONE:string
     ){}
 }
+

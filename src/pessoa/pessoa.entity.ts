@@ -1,3 +1,4 @@
+import { USUARIO } from "src/usuario/usuario.entity";
 import { Column, Entity, OneToOne, PrimaryColumn } from "typeorm";
 
 @Entity()
@@ -14,6 +15,6 @@ export class PESSOA{
     @Column()
     TELEFONE:string;
 
-    // @OneToOne(USUARIO: usuario => usuario)
-    // usuario: USUARIO;
+    @OneToOne(() =>USUARIO, usuario => usuario.IDPESSOA)
+     usuario: USUARIO;
 }

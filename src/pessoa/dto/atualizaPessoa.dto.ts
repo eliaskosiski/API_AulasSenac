@@ -1,11 +1,8 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class AlterarPessoaDTO{
     @IsString()
+    @IsNotEmpty({message:'nome nao pode ser vazio!'})
     @IsOptional()
-    ENDERECO:string;
-
-    @IsString()
-    @IsOptional()
-    TELEFONE:string;
+    NOME:string;
 }

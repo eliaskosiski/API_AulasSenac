@@ -1,24 +1,21 @@
+import { PESSOA } from "src/pessoa/pessoa.entity";
+import { Column, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
 
-export class UsuarioEntity{
-    id: string;
-    nome: string;
-    idade: BigInteger;
-    cidade: string;
-    email: string;
-    telefone: string;
-    senha: string; 
+export class USUARIO{
 
+    @PrimaryColumn()
+    ID:string;
 
-    constructor(id:string,nome: string,idade: BigInteger,cidade: string,email: string,telefone: string,senha: string){
-        this.id = id;
-        this.nome = nome;
-        this.idade = idade;
-        this.cidade = cidade;
-        this.email = email;
-        this.telefone = telefone;
-        this.senha = senha;
-    }
+    @Column()
+    LOGIN:string;
 
-   
+    @Column()
+    SENHA:string;
 
+    @Column()
+    EMAIL:string;
+
+    @OneToOne(() => PESSOA, pessoa => pessoa.ID)
+    @JoinColumn({name: 'IDPESSOA', referencedColumnName:'ID'})
+    IDPESSOA:PESSOA;
 }
