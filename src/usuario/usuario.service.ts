@@ -7,6 +7,7 @@ import { CriaUsuarioDTO } from "./dto/insereUsuario.dto";
 import { USUARIO } from "./usuario.entity";
 import {v4 as uuid} from 'uuid';
 import { AlterarUsuarioDTO } from "./dto/atualizaUsuario.dto";
+import { listarUsuarioPessoaDTO } from "./dto/listaUsuario.dto";
 
 @Injectable()
 export class UsuarioService {
@@ -37,6 +38,28 @@ export class UsuarioService {
             ID,
           },
         });
+    }
+
+    async listarPessoa(): Promise<listarUsuarioPessoaDTO[]> {
+      var resultado = await (this.usuarioRepository // select usuario.id as ID, usuario.login AS LOGIN, usuario.EMAIL AS EMAIL e from pessoa ......
+        .createQueryBuilder('usuario')
+        .select('usuario.ID', 'ID')
+        .addSelect('usuario.LOGIN','LOGIN')
+        .addSelect('usuario.EMAIL','EMAIL')
+        .addSelect('PE.NOME','PESSOA')
+        .leftJoin('pessoa', 'PE','usuario.idpessoa = PE.id')                     
+        .getRawMany());  
+  
+      const listaRetorno = resultado.map(
+        usuario => new listarUsuarioPessoaDTO(
+          usuario.ID,
+          usuario.LOGIN,
+          usuario.EMAIL,
+          usuario.PESSOA
+        )
+      );
+  
+      return listaRetorno;
     }
 
     async remover(id: string): Promise<RetornoObjDTO> {

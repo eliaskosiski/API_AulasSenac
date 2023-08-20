@@ -4,6 +4,7 @@ import { AlterarUsuarioDTO } from "./dto/atualizaUsuario.dto";
 import { CriaUsuarioDTO } from "./dto/insereUsuario.dto";
 import { USUARIO } from "./usuario.entity";
 import { UsuarioService } from "./usuario.service";
+import { listarUsuarioPessoaDTO } from "./dto/listaUsuario.dto";
 
  
  @Controller('/usuario')
@@ -15,6 +16,11 @@ export class UsuarioController{
     @Get('listar')
     async listar(): Promise<USUARIO[]>{
         return this.usuarioService.listar();
+    }
+
+    @Get('listarComPessoa')
+    async listarMarcas(): Promise<listarUsuarioPessoaDTO[]>{
+        return this.usuarioService.listarPessoa();
     }
 
     @Post('')
