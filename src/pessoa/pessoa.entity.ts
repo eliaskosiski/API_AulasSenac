@@ -17,5 +17,5 @@ export class PESSOA{
 
     // @OneToOne(() =>USUARIO, usuario => usuario.pessoa)
     // usuario: USUARIO;
-    //aaaaa
+    //aaaaaaa
 }
