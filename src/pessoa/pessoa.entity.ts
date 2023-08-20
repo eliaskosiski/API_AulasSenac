@@ -15,6 +15,6 @@ export class PESSOA{
     @Column()
     TELEFONE:string;
 
-    @OneToOne(() =>USUARIO, usuario => usuario.IDPESSOA)
-     usuario: USUARIO;
+    // @OneToOne(() =>USUARIO, usuario => usuario.pessoa)
+    // usuario: USUARIO;
 }

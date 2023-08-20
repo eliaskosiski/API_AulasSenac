@@ -6,7 +6,7 @@ import { USUARIO } from "./usuario.entity";
 import { UsuarioService } from "./usuario.service";
 
  
- @Controller('/pessoa')
+ @Controller('/usuario')
 export class UsuarioController{
     constructor(private readonly usuarioService: UsuarioService){
              
@@ -27,7 +27,7 @@ export class UsuarioController{
         return this.usuarioService.alterar(id,dados)        
     }
     
-    @Get('ID-:id')
+    @Get(':id')
     async listarID(@Param('id') id: string): Promise<USUARIO>{
         return this.usuarioService.localizarID(id);
     }

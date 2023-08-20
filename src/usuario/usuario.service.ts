@@ -11,9 +11,9 @@ import { AlterarUsuarioDTO } from "./dto/atualizaUsuario.dto";
 @Injectable()
 export class UsuarioService {
   constructor(    
-    @Inject('PESSOA_REPOSITORY')
-    private usuarioRepository: Repository<USUARIO>,      
     @Inject('USUARIO_REPOSITORY')
+    private usuarioRepository: Repository<USUARIO>,      
+    @Inject('PESSOA_REPOSITORY')
     private pessoaRepository: Repository<PESSOA>,  
     private readonly pessoaService: PessoaService
   ) {}

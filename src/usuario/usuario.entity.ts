@@ -1,5 +1,5 @@
 import { PESSOA } from "src/pessoa/pessoa.entity";
-import { Column, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from "typeorm";
 
 export class USUARIO{
 
@@ -16,6 +16,7 @@ export class USUARIO{
     EMAIL:string;
 
     @OneToOne(() => PESSOA, pessoa => pessoa.ID)
-    @JoinColumn({name: 'IDPESSOA', referencedColumnName:'ID'})
+    @JoinColumn({ name: 'IDPESSOA', referencedColumnName:'ID'})
     IDPESSOA:PESSOA;
+
 }

@@ -3,6 +3,8 @@ import { DatabaseModule } from "src/database/database.module";
 import { UsuarioController } from "./usuario.controller";
 import { usuarioProviders } from "./usuario.providers";
 import { UsuarioService } from "./usuario.service";
+import { pessoaProviders } from "src/pessoa/pessoa.providers";
+import { PessoaService } from "src/pessoa/pessoa.service";
 
 @Module ({
     imports: [DatabaseModule],
@@ -10,6 +12,8 @@ import { UsuarioService } from "./usuario.service";
     providers: [
         ...usuarioProviders,
         UsuarioService,
+        ...pessoaProviders,
+        PessoaService
     ],
 })
 
